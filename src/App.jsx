@@ -1,26 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
-
-function App() {
+import Dashboard from "./pages/Dashboard";
+import CvList from "./pages/cvManagement/CvList";
+import ProjectList from "./pages/projectManagement/ProjectList";
+export default function App() {
   return (
-    <AdminLayout>
-      {/* Nội dung chính của Admin sẽ hiện ở đây */}
-      <div className="card bg-grey p-6 shadow-xl">
-        <h1 className="text-2xl font-bold">Chào mừng Admin Hiếu!</h1>
-        <p className="mt-4">Đây là nơi bạn sẽ duyệt CV và quản lý hệ thống.</p>
-        
-        <div className="stats shadow mt-6 w-full">
-          <div className="stat">
-            <div className="stat-title">CV chờ duyệt</div>
-            <div className="stat-value text-primary">...</div>
-          </div>
-          <div className="stat">
-            <div className="stat-title">Doanh nghiệp mới</div>
-            <div className="stat-value text-secondary">...</div>
-          </div>
-        </div>
-      </div>
-    </AdminLayout>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AdminLayout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/cv" element={<CvList />} />
+          <Route path="/project" element={<ProjectList />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
