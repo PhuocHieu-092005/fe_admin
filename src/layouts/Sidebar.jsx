@@ -36,7 +36,9 @@ const Sidebar = () => {
         <div className="bg-blue-600 p-2.5 rounded-lg text-white font-bold text-xl">
           A
         </div>
-        <span className="font-bold text-xl text-white">ADMIN PORTAL</span>
+        <Link to="/" className="font-bold text-xl text-white">
+          ADMIN PORTAL
+        </Link>{" "}
       </div>
 
       <div className="flex-1 overflow-y-auto py-5 px-3">
