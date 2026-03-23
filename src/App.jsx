@@ -3,7 +3,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/dashboardManagement/Dashboard";
 import CvList from "./pages/cvManagement/CvList";
 import ProjectList from "./pages/projectManagement/ProjectList";
-import UserList from "./pages/userManagement/userList";
+import UserList from "./pages/userManagement/UserList";
 import JobList from "./pages/jobManagement/JobList";
 //System
 import AccessRequests from "./pages/system/AccessRequests";
