@@ -1,11 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import Login from "./pages/auth/Login";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/dashboardManagement/Dashboard";
 import CvList from "./pages/cvManagement/CvList";
 import ProjectList from "./pages/projectManagement/ProjectList";
 import UserList from "./pages/userManagement/UserList";
 import JobList from "./pages/jobManagement/JobList";
-//System
+
+// System
 import AccessRequests from "./pages/system/AccessRequests";
 import CvUpdates from "./pages/system/CvUpdates";
 import AuditLogs from "./pages/system/AuditLogs";
@@ -16,24 +21,36 @@ import Notifications from "./pages/system/Notifications";
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<AdminLayout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/cv" element={<CvList />} />
-          <Route path="/project" element={<ProjectList />} />
-          <Route path="/user" element={<UserList />} />
-          <Route path="/job" element={<JobList />} />
+      {/* AuthProvider bọc ngoài để mọi component đều gọi được useAuth() */}
+      <AuthProvider>
+        <Routes>
+          {/* TRANG CÔNG KHAI */}
+          <Route path="/login" element={<Login />} />
 
-          {/* SYSTEM */}
-          <Route path="/access" element={<AccessRequests />} />
-          <Route path="/updates" element={<CvUpdates />} />
-          <Route path="/logs" element={<AuditLogs />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/settings" element={<Settings />} />
+          {/* CÁC TRANG DÙNG CHUNG CHO ADMIN VÀ TEACHER */}
+          <Route
+            element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]} />}
+          >
+            <Route element={<AdminLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/cv" element={<CvList />} />
+              <Route path="/project" element={<ProjectList />} />
+              <Route path="/job" element={<JobList />} />
+              <Route path="/updates" element={<CvUpdates />} />
+              <Route path="/notifications" element={<Notifications />} />
 
-          <Route path="/notifications" element={<Notifications />} />
-        </Route>
-      </Routes>
+              {/* TRANG ĐẶC QUYỀN CHỈ DÀNH CHO ADMIN */}
+              <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+                <Route path="/user" element={<UserList />} />
+                <Route path="/access" element={<AccessRequests />} />
+                <Route path="/logs" element={<AuditLogs />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
+            </Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
