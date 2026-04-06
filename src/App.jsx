@@ -9,6 +9,8 @@ import CvList from "./pages/cvManagement/CvList";
 import ProjectList from "./pages/projectManagement/ProjectList";
 import UserList from "./pages/userManagement/UserList";
 import JobList from "./pages/jobManagement/JobList";
+import CourseList from "./pages/courseManagement/CourseList";
+import CompanyList from "./pages/companyManagement/CompanyList";
 
 // System
 import AccessRequests from "./pages/system/AccessRequests";
@@ -33,19 +35,21 @@ export default function App() {
           >
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/cv" element={<CvList />} />
               <Route path="/project" element={<ProjectList />} />
-              <Route path="/job" element={<JobList />} />
               <Route path="/updates" element={<CvUpdates />} />
               <Route path="/notifications" element={<Notifications />} />
+              <Route path="/course" element={<CourseList />} />
 
               {/* TRANG ĐẶC QUYỀN CHỈ DÀNH CHO ADMIN */}
               <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
                 <Route path="/user" element={<UserList />} />
+                <Route path="/company" element={<CompanyList />} />
                 <Route path="/access" element={<AccessRequests />} />
                 <Route path="/logs" element={<AuditLogs />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/cv" element={<CvList />} />
+                <Route path="/job" element={<JobList />} />
               </Route>
             </Route>
           </Route>

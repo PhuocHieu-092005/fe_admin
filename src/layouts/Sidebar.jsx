@@ -10,6 +10,8 @@ import {
   CreditCardIcon,
   Cog6ToothIcon,
   BellIcon,
+  BuildingOffice2Icon,
+  AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
 const Sidebar = () => {
@@ -80,6 +82,20 @@ const Sidebar = () => {
             <Link to="/job" className={linkClass("/job")}>
               <BriefcaseIcon className={iconClass("/job")} />
               <span>Job Posts</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/company" className={linkClass("/company")}>
+              <BuildingOffice2Icon className={iconClass("/company")} />
+              <span>Company Management</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/course" className={linkClass("/course")}>
+              <AcademicCapIcon className={iconClass("/course")} />
+              <span>Course Management</span>
             </Link>
           </li>
         </ul>

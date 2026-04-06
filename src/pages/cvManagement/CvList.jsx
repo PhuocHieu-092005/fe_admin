@@ -49,6 +49,9 @@ export default function CvList() {
     setActionLoading(true);
     try {
       await cvService.approveCv(id, status);
+      alert(
+        `Hồ sơ đã được ${status === "APPROVED" ? "duyệt" : "từ chối"} thành công!`,
+      );
       await loadCvs();
       if (selectedId === id) openDetails(id);
     } catch (err) {
