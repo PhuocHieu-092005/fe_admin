@@ -45,17 +45,53 @@ export default function CvList() {
     }
   };
 
+  // const handleApprove = async (id, status, adminNote) => {
+  //   setActionLoading(true);
+  //   try {
+  //     const res = await cvService.approveCv(id, status, adminNote);
+
+  //     console.log(res.response);
+
+  //     alert(
+  //       `Hồ sơ đã được ${status === "APPROVED" ? "duyệt" : "từ chối"} thành công!`,
+  //     );
+  //     await loadCvs();
+  //     if (selectedId === id) openDetails(id);
+  //   } catch (err) {
+  //     console.error("Lỗi duyệt CV:", err.data.response);
+  //   } finally {
+  //     setActionLoading(false);
+  //   }
+  // };
   const handleApprove = async (id, status, adminNote) => {
     setActionLoading(true);
     try {
-      await cvService.approveCv(id, status, adminNote);
+      const res = await cvService.approveCv(id, status, adminNote);
+
+      // Log data trả về từ server
+      console.log("Response data:", res.data);
+
       alert(
-        `Hồ sơ đã được ${status === "APPROVED" ? "duyệt" : "từ chối"} thành công!`,
+        `Hồ sơ đã được ${
+          status === "APPROVED" ? "duyệt" : "từ chối"
+        } thành công!`,
       );
+
       await loadCvs();
+
       if (selectedId === id) openDetails(id);
     } catch (err) {
-      console.error("Lỗi duyệt CV:", err);
+      console.error("Full error:", err);
+
+      if (err.response) {
+        console.error("Status:", err.response.status);
+        console.error("Data:", err.response.data);
+        console.error("Message:", err.response.data.message);
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+      } else {
+        console.error("Error message:", err.message);
+      }
     } finally {
       setActionLoading(false);
     }
