@@ -19,9 +19,14 @@ const cvService = {
   },
 
   // Phê duyệt hoặc từ chối CV
-  approveCv: async (id, status) => {
+  approveCv: async (id, status, adminNote) => {
     // status là chuỗi "APPROVED" hoặc "REJECTED"
-    const response = await axiosInstance.put(`/cvs/${id}/approve`, { status });
+    const payload = {
+      status: status,
+      admin_note: adminNote,
+    };
+
+    const response = await axiosInstance.put(`/cvs/${id}/approve`, payload);
     return response.data;
   },
 };

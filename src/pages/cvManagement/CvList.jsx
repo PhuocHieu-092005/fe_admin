@@ -45,10 +45,10 @@ export default function CvList() {
     }
   };
 
-  const handleApprove = async (id, status) => {
+  const handleApprove = async (id, status, adminNote) => {
     setActionLoading(true);
     try {
-      await cvService.approveCv(id, status);
+      await cvService.approveCv(id, status, adminNote);
       alert(
         `Hồ sơ đã được ${status === "APPROVED" ? "duyệt" : "từ chối"} thành công!`,
       );
