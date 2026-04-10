@@ -8,6 +8,7 @@ export default function CvDetailModal({
   actionLoading,
   onClose,
   onApprove,
+  hideActions,
 }) {
   // Thêm các state để quản lý việc nhập lý do từ chối
   const [isRejecting, setIsRejecting] = useState(false);
@@ -99,92 +100,94 @@ export default function CvDetailModal({
         </div>
 
         {/* Footer Modal: Hành động duyệt */}
-        <div className="px-10 py-8 bg-white border-t border-slate-100 flex flex-col">
-          {isRejecting ? (
-            /* ===== GIAO DIỆN KHI BẤM TỪ CHỐI (NHẬP LÝ DO) ===== */
-            <div className="w-full flex flex-col gap-3 animate-in slide-in-from-bottom-4 duration-300">
-              <label className="text-sm font-black text-slate-800 flex items-center gap-2">
-                LÝ DO TỪ CHỐI <span className="text-rose-500">*</span>
-              </label>
-              <textarea
-                value={adminNote}
-                onChange={(e) => {
-                  setAdminNote(e.target.value);
-                  if (error) setError("");
-                }}
-                disabled={actionLoading}
-                placeholder="Nhập lý do chi tiết tại sao CV này chưa đạt yêu cầu để sinh viên chỉnh sửa..."
-                className={`w-full p-5 border-2 rounded-2xl outline-none transition-all min-h-[120px] resize-none text-sm font-medium ${
-                  error
-                    ? "border-rose-400 focus:ring-4 focus:ring-rose-100"
-                    : "border-slate-200 focus:border-black focus:ring-4 focus:ring-slate-100"
-                }`}
-              />
-              {error && (
-                <p className="text-rose-500 text-xs font-bold tracking-wide">
-                  {error}
-                </p>
-              )}
+        {!hideActions && (
+          <div className="px-10 py-8 bg-white border-t border-slate-100 flex flex-col">
+            {isRejecting ? (
+              /* ===== GIAO DIỆN KHI BẤM TỪ CHỐI (NHẬP LÝ DO) ===== */
+              <div className="w-full flex flex-col gap-3 animate-in slide-in-from-bottom-4 duration-300">
+                <label className="text-sm font-black text-slate-800 flex items-center gap-2">
+                  LÝ DO TỪ CHỐI <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  value={adminNote}
+                  onChange={(e) => {
+                    setAdminNote(e.target.value);
+                    if (error) setError("");
+                  }}
+                  disabled={actionLoading}
+                  placeholder="Nhập lý do chi tiết tại sao CV này chưa đạt yêu cầu để sinh viên chỉnh sửa..."
+                  className={`w-full p-5 border-2 rounded-2xl outline-none transition-all min-h-[120px] resize-none text-sm font-medium ${
+                    error
+                      ? "border-rose-400 focus:ring-4 focus:ring-rose-100"
+                      : "border-slate-200 focus:border-black focus:ring-4 focus:ring-slate-100"
+                  }`}
+                />
+                {error && (
+                  <p className="text-rose-500 text-xs font-bold tracking-wide">
+                    {error}
+                  </p>
+                )}
 
-              <div className="flex justify-end gap-4 mt-2">
-                <button
-                  onClick={handleCancelReject}
-                  disabled={actionLoading}
-                  className="px-8 py-4 rounded-2xl font-black text-slate-500 hover:bg-slate-50 transition-colors uppercase text-[11px] tracking-widest disabled:opacity-50"
-                >
-                  Hủy bỏ
-                </button>
-                <button
-                  onClick={handleConfirmReject}
-                  disabled={actionLoading}
-                  className="px-10 py-4 rounded-2xl font-black bg-rose-500 text-white hover:bg-rose-600 transition-all uppercase text-[11px] tracking-widest shadow-xl shadow-rose-200 disabled:opacity-50 flex items-center gap-2"
-                >
-                  {actionLoading ? "Đang xử lý..." : "Xác nhận từ chối"}
-                </button>
-              </div>
-            </div>
-          ) : (
-            /* ===== GIAO DIỆN MẶC ĐỊNH (2 NÚT DUYỆT / TỪ CHỐI) ===== */
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
-              <div className="flex gap-10">
-                <div className="text-center">
-                  <p className="text-[9px] uppercase font-black text-slate-300 tracking-widest mb-1">
-                    Lượt xem
-                  </p>
-                  <p className="text-2xl font-black tabular-nums">
-                    {cv?.view_count || 0}
-                  </p>
-                </div>
-                <div className="text-center border-l pl-10 border-slate-100">
-                  <p className="text-[9px] uppercase font-black text-slate-300 tracking-widest mb-1">
-                    Lượt tải
-                  </p>
-                  <p className="text-2xl font-black tabular-nums">
-                    {cv?.download_count || 0}
-                  </p>
+                <div className="flex justify-end gap-4 mt-2">
+                  <button
+                    onClick={handleCancelReject}
+                    disabled={actionLoading}
+                    className="px-8 py-4 rounded-2xl font-black text-slate-500 hover:bg-slate-50 transition-colors uppercase text-[11px] tracking-widest disabled:opacity-50"
+                  >
+                    Hủy bỏ
+                  </button>
+                  <button
+                    onClick={handleConfirmReject}
+                    disabled={actionLoading}
+                    className="px-10 py-4 rounded-2xl font-black bg-rose-500 text-white hover:bg-rose-600 transition-all uppercase text-[11px] tracking-widest shadow-xl shadow-rose-200 disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {actionLoading ? "Đang xử lý..." : "Xác nhận từ chối"}
+                  </button>
                 </div>
               </div>
+            ) : (
+              /* ===== GIAO DIỆN MẶC ĐỊNH (2 NÚT DUYỆT / TỪ CHỐI) ===== */
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
+                <div className="flex gap-10">
+                  <div className="text-center">
+                    <p className="text-[9px] uppercase font-black text-slate-300 tracking-widest mb-1">
+                      Lượt xem
+                    </p>
+                    <p className="text-2xl font-black tabular-nums">
+                      {cv?.view_count || 0}
+                    </p>
+                  </div>
+                  <div className="text-center border-l pl-10 border-slate-100">
+                    <p className="text-[9px] uppercase font-black text-slate-300 tracking-widest mb-1">
+                      Lượt tải
+                    </p>
+                    <p className="text-2xl font-black tabular-nums">
+                      {cv?.download_count || 0}
+                    </p>
+                  </div>
+                </div>
 
-              <div className="flex gap-4 w-full md:w-auto">
-                <button
-                  onClick={() => setIsRejecting(true)}
-                  disabled={actionLoading}
-                  className="flex-1 md:flex-none px-10 py-4 rounded-2xl font-black border-2 border-rose-500 text-rose-500 hover:bg-rose-50 transition-colors uppercase text-[11px] tracking-widest disabled:opacity-30"
-                >
-                  Từ chối hồ sơ
-                </button>
-                <button
-                  // Bấm duyệt thì adminNote là rỗng/null
-                  onClick={() => onApprove(id, "APPROVED", null)}
-                  disabled={actionLoading}
-                  className="flex-1 md:flex-none px-12 py-4 rounded-2xl font-black border-2 border-emerald-500 text-emerald-500 hover:bg-emerald-50 transition-colors uppercase text-[11px] tracking-widest shadow-xl shadow-emerald-50 disabled:opacity-30"
-                >
-                  Duyệt hồ sơ này
-                </button>
+                <div className="flex gap-4 w-full md:w-auto">
+                  <button
+                    onClick={() => setIsRejecting(true)}
+                    disabled={actionLoading}
+                    className="flex-1 md:flex-none px-10 py-4 rounded-2xl font-black border-2 border-rose-500 text-rose-500 hover:bg-rose-50 transition-colors uppercase text-[11px] tracking-widest disabled:opacity-30"
+                  >
+                    Từ chối hồ sơ
+                  </button>
+                  <button
+                    // Bấm duyệt thì adminNote là rỗng/null
+                    onClick={() => onApprove(id, "APPROVED", null)}
+                    disabled={actionLoading}
+                    className="flex-1 md:flex-none px-12 py-4 rounded-2xl font-black border-2 border-emerald-500 text-emerald-500 hover:bg-emerald-50 transition-colors uppercase text-[11px] tracking-widest shadow-xl shadow-emerald-50 disabled:opacity-30"
+                  >
+                    Duyệt hồ sơ này
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

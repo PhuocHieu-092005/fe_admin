@@ -1,4 +1,5 @@
 import axiosInstance from "./api";
+
 const cvService = {
   // Lấy danh sách TẤT CẢ CV (Dành cho Admin)
   getAllCvs: async () => {
@@ -27,6 +28,26 @@ const cvService = {
     };
 
     const response = await axiosInstance.put(`/cvs/${id}/approve`, payload);
+    return response.data;
+  },
+
+  // Lấy danh sách Ticket chờ duyệt
+  getPendingUnlockRequests: async (page = 0, size = 10) => {
+    const response = await axiosInstance.get(
+      `/cvs/unlock-requests/pending?page=${page}&size=${size}`,
+    );
+    return response.data;
+  },
+
+  // Admin duyệt / từ chối Ticket
+  approveUnlockRequest: async (requestId, isApproved, adminNote = "") => {
+    const response = await axiosInstance.put(
+      `/cvs/unlock-requests/${requestId}/approve`,
+      {
+        approved: isApproved,
+        admin_note: adminNote,
+      },
+    );
     return response.data;
   },
 };

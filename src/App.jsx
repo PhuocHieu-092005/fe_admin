@@ -11,6 +11,7 @@ import UserList from "./pages/userManagement/UserList";
 import JobList from "./pages/jobManagement/JobList";
 import CourseList from "./pages/courseManagement/CourseList";
 import CompanyList from "./pages/companyManagement/CompanyList";
+import ListRequestEdit from "./pages/cvEditRequestManagement/ListRequestEdit";
 
 // System
 import AccessRequests from "./pages/system/AccessRequests";
@@ -50,6 +51,7 @@ export default function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/cv" element={<CvList />} />
                 <Route path="/job" element={<JobList />} />
+                <Route path="/cv-edit-requests" element={<ListRequestEdit />} />
               </Route>
             </Route>
           </Route>

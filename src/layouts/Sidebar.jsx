@@ -63,6 +63,15 @@ const Sidebar = () => {
               <span>CV Management</span>
             </Link>
           </li>
+          <li>
+            <Link
+              to="/cv-edit-requests"
+              className={linkClass("/cv-edit-requests")}
+            >
+              <DocumentTextIcon className={iconClass("/cv")} />
+              <span>CV Edit Requests</span>
+            </Link>
+          </li>
 
           <li>
             <Link to="/project" className={linkClass("/project")}>
