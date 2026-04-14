@@ -14,6 +14,7 @@ import {
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
+
 const Sidebar = () => {
   const location = useLocation();
 
@@ -33,18 +34,16 @@ const Sidebar = () => {
 
   return (
     <div className="w-72 bg-[#1e293b] min-h-screen text-slate-300 flex flex-col border-r border-slate-700/50">
-      {/* Logo */}
       <div className="p-6 flex items-center gap-3 border-b border-slate-700/50">
         <div className="bg-blue-600 p-2.5 rounded-lg text-white font-bold text-xl">
           A
         </div>
         <Link to="/" className="font-bold text-xl text-white">
           ADMIN PORTAL
-        </Link>{" "}
+        </Link>
       </div>
 
       <div className="flex-1 overflow-y-auto py-5 px-3">
-        {/* ===== GROUP 1 ===== */}
         <h3 className="px-4 mb-3 text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
           QUẢN LÝ CV & TUYỂN DỤNG CNTT
         </h3>
@@ -79,6 +78,13 @@ const Sidebar = () => {
           </li>
 
           <li>
+            <Link to="/teacher" className={linkClass("/teacher")}>
+              <UsersIcon className={iconClass("/teacher")} />
+              <span>Teacher Management</span>
+            </Link>
+          </li>
+
+          <li>
             <Link to="/job" className={linkClass("/job")}>
               <BriefcaseIcon className={iconClass("/job")} />
               <span>Job Posts</span>
@@ -100,7 +106,6 @@ const Sidebar = () => {
           </li>
         </ul>
 
-        {/* ===== GROUP 2 ===== */}
         <h3 className="px-4 mb-3 text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
           HỆ THỐNG
         </h3>
