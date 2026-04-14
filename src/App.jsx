@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboardManagement/Dashboard";
 import CvList from "./pages/cvManagement/CvList";
 import ProjectList from "./pages/projectManagement/ProjectList";
 import UserList from "./pages/userManagement/UserList";
+import TeacherList from "./pages/teacherManagement/TeacherList";
 import JobList from "./pages/jobManagement/JobList";
 import CourseList from "./pages/courseManagement/CourseList";
 import CompanyList from "./pages/companyManagement/CompanyList";
@@ -24,13 +25,10 @@ import Notifications from "./pages/system/Notifications";
 export default function App() {
   return (
     <BrowserRouter>
-      {/* AuthProvider bọc ngoài để mọi component đều gọi được useAuth() */}
       <AuthProvider>
         <Routes>
-          {/* TRANG CÔNG KHAI */}
           <Route path="/login" element={<Login />} />
 
-          {/* CÁC TRANG DÙNG CHUNG CHO ADMIN VÀ TEACHER */}
           <Route
             element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]} />}
           >
@@ -41,9 +39,9 @@ export default function App() {
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/course" element={<CourseList />} />
 
-              {/* TRANG ĐẶC QUYỀN CHỈ DÀNH CHO ADMIN */}
               <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
                 <Route path="/user" element={<UserList />} />
+                <Route path="/teacher" element={<TeacherList />} />
                 <Route path="/company" element={<CompanyList />} />
                 <Route path="/access" element={<AccessRequests />} />
                 <Route path="/logs" element={<AuditLogs />} />
