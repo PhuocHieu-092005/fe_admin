@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import jobService from "../../services/jobService";
 export default function JobList() {
@@ -18,10 +17,10 @@ export default function JobList() {
   };
   const fetchJobs = async () => {
     try {
-    
-      const reponse = currentTab ==="PENDING"
-      ? await jobService.getPendingJobs()
-      : await jobService.getActiveJobs();
+      const reponse =
+        currentTab === "PENDING"
+          ? await jobService.getPendingJobs()
+          : await jobService.getActiveJobs();
       setJobs(reponse.data);
     } catch (err) {
       console.log("Không thể tải danh sách công việc");
@@ -49,7 +48,7 @@ export default function JobList() {
     );
     if (isComfirmed) {
       try {
-        await jobService.approveJob(id,action);
+        await jobService.approveJob(id, action);
         window.alert(`Thành công: Đã ${actionText} bài viết`);
         fetchJobs();
       } catch (err) {
@@ -58,6 +57,7 @@ export default function JobList() {
       }
     }
   };
+
   return (
     <>
       {selectedJob && (
@@ -74,9 +74,7 @@ export default function JobList() {
             {/* Header Modal: Logo + Tiêu đề */}
             <div className="flex items-center gap-4 mb-6 border-b pb-4">
               <img
-                src={
-                  selectedJob.companyLogo 
-                }
+                src={selectedJob.companyLogo}
                 alt="logo"
                 className="w-16 h-16 rounded-lg object-cover border"
               />
@@ -131,7 +129,17 @@ export default function JobList() {
                 </span>
               </div>
             </div>
-
+            <div className="flex flex-wrap gap-2 mt-3">
+              {selectedJob.tags &&
+                selectedJob.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-200 shadow-sm"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+            </div>
             {/* File đính kèm */}
             {selectedJob.jdFileUrl && (
               <div className="mt-6 p-4 bg-indigo-50 rounded-lg border border-indigo-100">
