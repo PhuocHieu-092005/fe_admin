@@ -211,7 +211,7 @@ export default function JobList() {
             Kiểm duyệt tin tuyển dụng
           </h2>
           <span className="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">
-            {jobs.length} tin chờ duyệt
+           {jobs.length} {currentTab === "PENDING" ? "tin chờ duyệt" : "tin đã duyệt"}
           </span>
         </div>
 
