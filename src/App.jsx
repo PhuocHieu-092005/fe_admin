@@ -13,6 +13,7 @@ import JobList from "./pages/jobManagement/JobList";
 import CourseList from "./pages/courseManagement/CourseList";
 import CompanyList from "./pages/companyManagement/CompanyList";
 import ListRequestEdit from "./pages/cvEditRequestManagement/ListRequestEdit";
+import TeacherProjectEvaluationList from "./pages/teacherProjectEvaluation/TeacherProjectEvaluationList";
 
 // System
 import AccessRequests from "./pages/system/AccessRequests";
@@ -34,12 +35,19 @@ export default function App() {
           >
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/project" element={<ProjectList />} />
               <Route path="/updates" element={<CvUpdates />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/course" element={<CourseList />} />
 
+              <Route element={<ProtectedRoute allowedRoles={["TEACHER"]} />}>
+                <Route
+                  path="/teacher/project-evaluations"
+                  element={<TeacherProjectEvaluationList />}
+                />
+              </Route>
+
               <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+                <Route path="/project" element={<ProjectList />} />
                 <Route path="/user" element={<UserList />} />
                 <Route path="/teacher" element={<TeacherList />} />
                 <Route path="/company" element={<CompanyList />} />

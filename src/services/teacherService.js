@@ -15,10 +15,37 @@ export const deleteTeacherById = async (id) => {
   return response.data;
 };
 
+export const getProjectsForEvaluation = async () => {
+  const response = await api.get("/teacher/projects-for-evaluation");
+  return response.data;
+};
+
+export const createProjectEvaluation = async (payload) => {
+  const response = await api.post("/teacher/project-evaluations", payload);
+  return response.data;
+};
+
+export const updateProjectEvaluation = async (evaluationId, payload) => {
+  const response = await api.put(
+    `/teacher/project-evaluations/${evaluationId}`,
+    payload,
+  );
+  return response.data;
+};
+
+export const getMyEvaluationByProject = async (projectId) => {
+  const response = await api.get(`/teacher/projects/${projectId}/my-evaluation`);
+  return response.data;
+};
+
 const teacherService = {
   getTeachers,
   getTeacherById,
   deleteTeacherById,
+  getProjectsForEvaluation,
+  createProjectEvaluation,
+  updateProjectEvaluation,
+  getMyEvaluationByProject,
 };
 
 export default teacherService;
