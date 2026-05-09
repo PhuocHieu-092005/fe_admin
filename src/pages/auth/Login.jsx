@@ -42,6 +42,7 @@ export default function Login() {
           role: userRole,
           full_name,
           avatar_url,
+          email
         } = responseData.data;
 
         if (userRole !== "ADMIN" && userRole !== "TEACHER") {
@@ -50,7 +51,7 @@ export default function Login() {
           return;
         }
         // Truyền 4 tham số vào hàm login của Context
-        login(access_token, userRole, full_name, avatar_url);
+        login(access_token, userRole, full_name, avatar_url,email);
         navigate("/");
       } else {
         setError(responseData.message || "Đăng nhập thất bại.");

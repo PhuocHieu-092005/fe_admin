@@ -20,12 +20,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (token, role, fullName, avatarUrl) => {
+  const login = (token, role, fullName, avatarUrl,email) => {
     const userData = {
       token,
       role,
       fullName,
       avatarUrl,
+      email
     };
 
     setUser(userData);
