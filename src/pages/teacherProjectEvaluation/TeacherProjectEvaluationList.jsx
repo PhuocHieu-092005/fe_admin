@@ -19,7 +19,9 @@ export default function TeacherProjectEvaluationList() {
   const [modalLoading, setModalLoading] = useState(false);
 
   const preloadPreviousEvaluations = useCallback(async (projectList) => {
-    const evaluatedProjects = projectList.filter((project) => project.hasEvaluation);
+    const evaluatedProjects = projectList.filter(
+      (project) => project.hasEvaluation,
+    );
 
     if (evaluatedProjects.length === 0) {
       return;
@@ -103,7 +105,9 @@ export default function TeacherProjectEvaluationList() {
 
   const stats = useMemo(() => {
     const total = projects.length;
-    const evaluated = projects.filter((project) => project.hasEvaluation).length;
+    const evaluated = projects.filter(
+      (project) => project.hasEvaluation,
+    ).length;
 
     return {
       total,
@@ -191,13 +195,13 @@ export default function TeacherProjectEvaluationList() {
   };
 
   return (
-    <div className="min-h-screen bg-white p-8 text-left text-black">
-      <div className="mb-10 flex flex-col gap-4 border-b border-slate-100 pb-6 lg:flex-row lg:items-center lg:justify-between">
+    <div className="min-h-screen bg-white p-4 text-left text-black">
+      <div className="mb-4 flex flex-col gap-3 border-b border-slate-100 pb-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h1 className="text-4xl font-semibold text-black">
+          <h1 className="text-3xl font-semibold text-black">
             Đánh giá đồ án cho giảng viên
           </h1>
-          <p className="mt-2 text-sm font-medium italic text-slate-400">
+          <p className="mt-1 text-sm font-medium italic text-slate-400">
             Xem danh sách đồ án theo học phần phụ trách và tạo nhận xét đánh giá
           </p>
         </div>
@@ -205,7 +209,7 @@ export default function TeacherProjectEvaluationList() {
         <button
           onClick={fetchProjects}
           disabled={loading}
-          className="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 disabled:cursor-wait disabled:opacity-60"
+          className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 disabled:cursor-wait disabled:opacity-60"
         >
           {loading ? "Đang tải..." : "Tải lại danh sách"}
         </button>

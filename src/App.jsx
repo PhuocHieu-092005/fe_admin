@@ -23,6 +23,8 @@ import AuditLogs from "./pages/system/AuditLogs";
 import Settings from "./pages/system/Settings";
 import Payments from "./pages/system/Payments";
 import Notifications from "./pages/system/Notifications";
+// teacher
+import TeacherProfile from "./pages/teacherManagement/TeacherProfile";
 
 export default function App() {
   return (
@@ -50,6 +52,7 @@ export default function App() {
                   path="/teacher/project-evaluations"
                   element={<TeacherProjectEvaluationList />}
                 />
+                <Route path="/teacher/profile" element={<TeacherProfile />} />
               </Route>
 
               <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>

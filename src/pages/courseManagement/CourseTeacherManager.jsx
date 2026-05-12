@@ -1,10 +1,47 @@
 import React from "react";
 import { X, UserPlus, UserMinus, GraduationCap, Users } from "lucide-react";
 
+function getTeacherId(teacher) {
+  return teacher?.id || teacher?.teacher_id || teacher?.teacherId;
+}
+
+function getTeacherFullName(teacher, allTeachers = []) {
+  const teacherId = getTeacherId(teacher);
+
+  const fullTeacher = allTeachers.find(
+    (item) => Number(item.id) === Number(teacherId),
+  );
+
+  return (
+    teacher?.full_name ||
+    teacher?.fullName ||
+    fullTeacher?.full_name ||
+    fullTeacher?.fullName ||
+    "Chưa có tên"
+  );
+}
+
+function getTeacherCode(teacher, allTeachers = []) {
+  const teacherId = getTeacherId(teacher);
+
+  const fullTeacher = allTeachers.find(
+    (item) => Number(item.id) === Number(teacherId),
+  );
+
+  return (
+    teacher?.employee_code ||
+    teacher?.employeeCode ||
+    fullTeacher?.employee_code ||
+    fullTeacher?.employeeCode ||
+    "N/A"
+  );
+}
+
 export default function CourseTeacherManager({
   managingCourse,
   selectedTeacherId,
   setSelectedTeacherId,
+  allTeachers = [],
   availableTeachers,
   teacherLoading,
   onAssignTeacher,
@@ -13,10 +50,13 @@ export default function CourseTeacherManager({
 }) {
   if (!managingCourse) return null;
 
+  const assignedTeachers = managingCourse.teachers || [];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6">
       <div className="relative max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-[32px] bg-white p-6 shadow-2xl md:p-8">
         <button
+          type="button"
           onClick={onClose}
           className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-all hover:bg-black hover:text-white"
         >
@@ -48,13 +88,15 @@ export default function CourseTeacherManager({
             <select
               value={selectedTeacherId}
               onChange={(e) => setSelectedTeacherId(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition-all focus:border-black"
+              disabled={teacherLoading}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition-all focus:border-black disabled:cursor-not-allowed disabled:opacity-60"
             >
               <option value="">Chọn giảng viên...</option>
               {availableTeachers.map((teacher) => (
                 <option key={teacher.id} value={teacher.id}>
-                  {teacher.full_name} -{" "}
-                  {teacher.employee_code || teacher.employeeCode}
+                  {(teacher.full_name || teacher.fullName || "Chưa có tên") +
+                    " - " +
+                    (teacher.employee_code || teacher.employeeCode || "N/A")}
                 </option>
               ))}
             </select>
@@ -66,12 +108,13 @@ export default function CourseTeacherManager({
             )}
 
             <button
+              type="button"
               onClick={onAssignTeacher}
               disabled={teacherLoading}
-              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-black px-5 py-3 text-sm font-black text-white transition-all hover:bg-slate-800 disabled:opacity-60"
+              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-black px-5 py-3 text-sm font-black text-white transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <UserPlus size={16} />
-              Gán giảng viên
+              {teacherLoading ? "Đang gán..." : "Gán giảng viên"}
             </button>
           </div>
 
@@ -83,7 +126,7 @@ export default function CourseTeacherManager({
             </div>
 
             <div className="divide-y divide-slate-50">
-              {(managingCourse.teachers || []).length === 0 ? (
+              {assignedTeachers.length === 0 ? (
                 <div className="p-10 text-center">
                   <Users size={36} className="mx-auto mb-3 text-slate-300" />
                   <p className="text-sm text-slate-400">
@@ -91,30 +134,36 @@ export default function CourseTeacherManager({
                   </p>
                 </div>
               ) : (
-                managingCourse.teachers.map((teacher) => (
-                  <div
-                    key={teacher.id}
-                    className="flex flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between"
-                  >
-                    <div>
-                      <p className="font-bold text-slate-900">
-                        {teacher.full_name || "Chưa có tên"}
-                      </p>
-                      <p className="mt-1 text-sm text-slate-500">
-                        {teacher.employee_code || teacher.employeeCode || "N/A"}
-                      </p>
-                    </div>
+                assignedTeachers.map((teacher) => {
+                  const teacherName = getTeacherFullName(teacher, allTeachers);
+                  const teacherCode = getTeacherCode(teacher, allTeachers);
 
-                    <button
-                      onClick={() => onRemoveTeacher(teacher)}
-                      disabled={teacherLoading}
-                      className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 px-4 py-2 text-sm font-bold text-rose-600 transition-all hover:bg-rose-50 disabled:opacity-60"
+                  return (
+                    <div
+                      key={getTeacherId(teacher)}
+                      className="flex flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between"
                     >
-                      <UserMinus size={15} />
-                      Gỡ khỏi khóa học
-                    </button>
-                  </div>
-                ))
+                      <div>
+                        <p className="font-bold text-slate-900">
+                          {teacherName}
+                        </p>
+                        <p className="mt-1 text-sm text-slate-500">
+                          {teacherCode}
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => onRemoveTeacher(teacher)}
+                        disabled={teacherLoading}
+                        className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 px-4 py-2 text-sm font-bold text-rose-600 transition-all hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        <UserMinus size={15} />
+                        Gỡ khỏi khóa học
+                      </button>
+                    </div>
+                  );
+                })
               )}
             </div>
           </div>
@@ -122,6 +171,7 @@ export default function CourseTeacherManager({
 
         <div className="mt-8 flex justify-end">
           <button
+            type="button"
             onClick={onClose}
             className="rounded-2xl bg-black px-6 py-3 text-sm font-black text-white transition-all hover:bg-slate-800"
           >

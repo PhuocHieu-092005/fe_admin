@@ -14,6 +14,7 @@ import {
   AcademicCapIcon,
   ClipboardDocumentListIcon,
   ClipboardDocumentCheckIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -61,17 +62,29 @@ const Sidebar = () => {
           </li>
 
           {isTeacher ? (
-            <li>
-              <Link
-                to="/teacher/project-evaluations"
-                className={linkClass("/teacher/project-evaluations")}
-              >
-                <ClipboardDocumentCheckIcon
-                  className={iconClass("/teacher/project-evaluations")}
-                />
-                <span>Đánh giá đồ án</span>
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link
+                  to="/teacher/project-evaluations"
+                  className={linkClass("/teacher/project-evaluations")}
+                >
+                  <ClipboardDocumentCheckIcon
+                    className={iconClass("/teacher/project-evaluations")}
+                  />
+                  <span>Đánh giá đồ án</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/teacher/profile"
+                  className={linkClass("/teacher/profile")}
+                >
+                  <UserCircleIcon className={iconClass("/teacher/profile")} />
+                  <span>Thông tin cá nhân</span>
+                </Link>
+              </li>
+            </>
           ) : null}
 
           {isAdmin ? (

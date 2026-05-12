@@ -14,6 +14,18 @@ export const deleteTeacherById = async (id) => {
   const response = await api.delete(`/teachers/${id}`);
   return response.data;
 };
+// tạo tài khoản teacher
+export const createTeacherAccount = async (payload) => {
+  const response = await api.post("/auth/admin/register", {
+    email: payload.email,
+    password: payload.password,
+    role: "TEACHER",
+    createdByAdmin: true,
+    full_name: payload.full_name,
+  });
+
+  return response.data;
+};
 
 export const getProjectsForEvaluation = async () => {
   const response = await api.get("/teacher/projects-for-evaluation");
@@ -42,6 +54,7 @@ const teacherService = {
   getTeachers,
   getTeacherById,
   deleteTeacherById,
+  createTeacherAccount,
   getProjectsForEvaluation,
   createProjectEvaluation,
   updateProjectEvaluation,

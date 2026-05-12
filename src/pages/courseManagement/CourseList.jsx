@@ -241,17 +241,17 @@ export default function CourseList() {
       setTeacherLoading(false);
     }
   };
-
   const availableTeachersForCurrentCourse = useMemo(() => {
     if (!managingCourse) return teachers;
 
     const assignedIds = new Set(
-      (managingCourse.teachers || []).map((teacher) => teacher.id),
+      (managingCourse.teachers || []).map((teacher) =>
+        Number(teacher.id || teacher.teacher_id || teacher.teacherId),
+      ),
     );
 
-    return teachers.filter((teacher) => !assignedIds.has(teacher.id));
+    return teachers.filter((teacher) => !assignedIds.has(Number(teacher.id)));
   }, [teachers, managingCourse]);
-
   useEffect(() => {
     if (!managingCourse) return;
     const freshCourse = courses.find(
@@ -325,6 +325,7 @@ export default function CourseList() {
         managingCourse={managingCourse}
         selectedTeacherId={selectedTeacherId}
         setSelectedTeacherId={setSelectedTeacherId}
+        allTeachers={teachers}
         availableTeachers={availableTeachersForCurrentCourse}
         teacherLoading={teacherLoading}
         onAssignTeacher={handleAssignTeacher}
