@@ -7,6 +7,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/dashboardManagement/Dashboard";
 import CvList from "./pages/cvManagement/CvList";
 import ProjectList from "./pages/projectManagement/ProjectList";
+import ProjectAccessRequestList from "./pages/projectManagement/ProjectAccessRequestList";
 import UserList from "./pages/userManagement/UserList";
 import TeacherList from "./pages/teacherManagement/TeacherList";
 import JobList from "./pages/jobManagement/JobList";
@@ -35,6 +36,11 @@ export default function App() {
           >
             <Route element={<AdminLayout />}>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/project" element={<ProjectList />} />
+              <Route
+                path="/project-access-requests"
+                element={<ProjectAccessRequestList />}
+              />
               <Route path="/updates" element={<CvUpdates />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/course" element={<CourseList />} />

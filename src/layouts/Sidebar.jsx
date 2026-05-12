@@ -12,6 +12,7 @@ import {
   BellIcon,
   BuildingOffice2Icon,
   AcademicCapIcon,
+  ClipboardDocumentListIcon,
   ClipboardDocumentCheckIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
@@ -40,9 +41,7 @@ const Sidebar = () => {
   return (
     <div className="flex min-h-screen w-72 flex-col border-r border-slate-700/50 bg-[#1e293b] text-slate-300">
       <div className="flex items-center gap-3 border-b border-slate-700/50 p-6">
-        <div className="rounded-lg bg-blue-600 p-2.5 text-xl font-bold text-white">
-          A
-        </div>
+        <div className="rounded-lg bg-blue-600 p-2.5 text-xl font-bold text-white"></div>
         <Link to="/" className="text-xl font-bold text-white">
           {isTeacher ? "TEACHER PORTAL" : "ADMIN PORTAL"}
         </Link>
@@ -96,6 +95,17 @@ const Sidebar = () => {
                 <Link to="/project" className={linkClass("/project")}>
                   <FolderIcon className={iconClass("/project")} />
                   <span>Project Management</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/project-access-requests"
+                  className={linkClass("/project-access-requests")}
+                >
+                  <ClipboardDocumentListIcon
+                    className={iconClass("/project-access-requests")}
+                  />
+                  <span>Project Access Requests</span>
                 </Link>
               </li>
               <li>
