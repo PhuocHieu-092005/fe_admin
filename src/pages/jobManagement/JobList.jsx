@@ -110,12 +110,7 @@ export default function JobList() {
                     : "Thỏa thuận"}
                 </span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-gray-400">Lượt xem tin</span>
-                <span className="font-semibold text-blue-600">
-                  {selectedJob.viewCount} lượt
-                </span>
-              </div>
+
               <div className="flex flex-col">
                 <span className="text-gray-400">Ngày bắt đầu</span>
                 <span className="font-semibold">
@@ -128,17 +123,34 @@ export default function JobList() {
                   {new Date(selectedJob.endDay).toLocaleDateString("vi-VN")}
                 </span>
               </div>
+
+            
+              <div className=" gap-2 mt-3">
+                  <span className="text-gray-400 text-sm mt-2">Công nghệ </span>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                {selectedJob.tags &&
+                  selectedJob.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-200 shadow-sm"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+              </div>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-3">
-              {selectedJob.tags &&
-                selectedJob.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-200 shadow-sm"
-                  >
-                    #{tag}
-                  </span>
-                ))}
+            <div className="flex flex-col">
+              <span className="text-gray-400">Kỹ năng yêu cầu</span>
+              <span className="font-semibold text-gray-700">
+                {selectedJob.requirements}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-400 mt-2">Mô tả</span>
+              <span className="font-semibold text-gray-700">
+                {selectedJob.description}
+              </span>
             </div>
             {/* File đính kèm */}
             {selectedJob.jdFileUrl && (
@@ -152,7 +164,7 @@ export default function JobList() {
                   rel="noreferrer"
                   className="text-indigo-600 hover:text-indigo-800 underline flex items-center gap-2"
                 >
-                  <span>📄</span> Xem chi tiết tệp mô tả công việc
+                  <span></span> Xem chi tiết tệp mô tả công việc
                 </a>
               </div>
             )}
