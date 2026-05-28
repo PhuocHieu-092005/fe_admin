@@ -358,7 +358,7 @@ export default function ProjectAccessRequestList() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-slate-900">
-              Project Access Requests
+              Yêu cầu truy cập đồ án
             </h1>
             <p className="mt-2 text-sm text-slate-500">
               Quản lý các yêu cầu hợp tác hoặc truy cập project từ doanh nghiệp.

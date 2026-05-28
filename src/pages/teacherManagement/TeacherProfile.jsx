@@ -176,12 +176,6 @@ export default function TeacherProfile() {
                   />
                 </div>
               </div>
-
-              <div className="rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-700">
-                Hiện backend chưa có API cập nhật họ tên cho giảng viên, nên
-                phần họ tên đang để chỉ xem. Có thể đổi mật khẩu bằng form bên
-                cạnh.
-              </div>
             </div>
           </div>
 
