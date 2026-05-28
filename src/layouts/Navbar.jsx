@@ -8,7 +8,7 @@ import { useAuth } from "../contexts/AuthContext";
 import notificationService from "../services/notificationService";
 import { connectWebSocket, disconnectWebSocket } from "../services/wsService";
 const Navbar = () => {
-  const { user,logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -19,7 +19,7 @@ const Navbar = () => {
     // eslint-disable-next-line react-hooks/immutability
     fetchInitialData();
     console.log("giá trị của userId là: ", user);
-    console.log("an",user);
+    console.log("an", user);
     connectWebSocket(user.email, (message) => {
       console.log("Tín hiệu mới", message);
       alert("Bạn vừa có thông báo mới!");
@@ -78,7 +78,7 @@ const Navbar = () => {
         {/* Bên trái: Tiêu đề trang */}
         <div className="flex items-center">
           <h2 className="text-xl font-bold text-gray-800 tracking-tight">
-            Dashboard
+            Tổng quan
           </h2>
         </div>
 

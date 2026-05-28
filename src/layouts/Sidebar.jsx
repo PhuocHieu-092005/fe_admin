@@ -57,7 +57,7 @@ const Sidebar = () => {
           <li>
             <Link to="/" className={linkClass("/")}>
               <Squares2X2Icon className={iconClass("/")} />
-              <span>Dashboard</span>
+              <span>Tổng quan</span>
             </Link>
           </li>
 
@@ -92,7 +92,7 @@ const Sidebar = () => {
               <li>
                 <Link to="/cv" className={linkClass("/cv")}>
                   <DocumentTextIcon className={iconClass("/cv")} />
-                  <span>CV Management</span>
+                  <span>Quản lý CV</span>
                 </Link>
               </li>
               <li>
@@ -101,13 +101,13 @@ const Sidebar = () => {
                   className={linkClass("/cv-edit-requests")}
                 >
                   <DocumentTextIcon className={iconClass("/cv")} />
-                  <span>CV Edit Requests</span>
+                  <span>Yêu cầu chỉnh sửa CV</span>
                 </Link>
               </li>
               <li>
                 <Link to="/project" className={linkClass("/project")}>
                   <FolderIcon className={iconClass("/project")} />
-                  <span>Project Management</span>
+                  <span>Quản lý đò án</span>
                 </Link>
               </li>
               <li>
@@ -118,37 +118,37 @@ const Sidebar = () => {
                   <ClipboardDocumentListIcon
                     className={iconClass("/project-access-requests")}
                   />
-                  <span>Project Access Requests</span>
+                  <span>Yêu cầu truy cập đồ án</span>
                 </Link>
               </li>
               <li>
                 <Link to="/user" className={linkClass("/user")}>
                   <UsersIcon className={iconClass("/user")} />
-                  <span>User Management</span>
+                  <span>Quản lý người dùng</span>
                 </Link>
               </li>
               <li>
                 <Link to="/teacher" className={linkClass("/teacher")}>
                   <UsersIcon className={iconClass("/teacher")} />
-                  <span>Teacher Management</span>
+                  <span>Quản lý giảng viên</span>
                 </Link>
               </li>
               <li>
                 <Link to="/job" className={linkClass("/job")}>
                   <BriefcaseIcon className={iconClass("/job")} />
-                  <span>Job Posts</span>
+                  <span>Bài đăng tuyển dụng</span>
                 </Link>
               </li>
               <li>
                 <Link to="/company" className={linkClass("/company")}>
                   <BuildingOffice2Icon className={iconClass("/company")} />
-                  <span>Company Management</span>
+                  <span>Quản lý công ty</span>
                 </Link>
               </li>
               <li>
                 <Link to="/course" className={linkClass("/course")}>
                   <AcademicCapIcon className={iconClass("/course")} />
-                  <span>Course Management</span>
+                  <span>Quản lý khóa học</span>
                 </Link>
               </li>
             </>
@@ -165,31 +165,31 @@ const Sidebar = () => {
               <li>
                 <Link to="/access" className={linkClass("/access")}>
                   <KeyIcon className={iconClass("/access")} />
-                  <span>Access Requests</span>
+                  <span>Yêu cầu truy cập</span>
                 </Link>
               </li>
               <li>
                 <Link to="/updates" className={linkClass("/updates")}>
                   <ArrowPathIcon className={iconClass("/updates")} />
-                  <span>CV Updates</span>
+                  <span>Cập nhật CV</span>
                 </Link>
               </li>
               <li>
                 <Link to="/logs" className={linkClass("/logs")}>
                   <ClockIcon className={iconClass("/logs")} />
-                  <span>Audit Logs</span>
+                  <span>Nhật ký hoạt động</span>
                 </Link>
               </li>
               <li>
                 <Link to="/payments" className={linkClass("/payments")}>
                   <CreditCardIcon className={iconClass("/payments")} />
-                  <span>Payments & Wallets</span>
+                  <span>Thanh toán & Ví</span>
                 </Link>
               </li>
               <li>
                 <Link to="/settings" className={linkClass("/settings")}>
                   <Cog6ToothIcon className={iconClass("/settings")} />
-                  <span>Settings</span>
+                  <span>Cài đặt</span>
                 </Link>
               </li>
             </>
@@ -198,7 +198,7 @@ const Sidebar = () => {
           <li>
             <Link to="/notifications" className={linkClass("/notifications")}>
               <BellIcon className={iconClass("/notifications")} />
-              <span>Notifications</span>
+              <span>Thông báo</span>
             </Link>
           </li>
         </ul>

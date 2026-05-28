@@ -115,7 +115,9 @@ export default function Payments() {
     const actionText = isApproved ? "duyệt" : "từ chối";
 
     const result = await Swal.fire({
-      title: isApproved ? "Duyệt yêu cầu rút tiền?" : "Từ chối yêu cầu rút tiền?",
+      title: isApproved
+        ? "Duyệt yêu cầu rút tiền?"
+        : "Từ chối yêu cầu rút tiền?",
       text: `Yêu cầu #${withdrawal.id} của ${withdrawal.userEmail || "sinh viên"} sẽ được ${actionText}.`,
       input: "textarea",
       inputLabel: "Ghi chú của admin",
@@ -170,7 +172,7 @@ export default function Payments() {
       <div className="mb-10 flex flex-col gap-4 border-b border-slate-100 pb-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h1 className="text-4xl font-semibold text-black">
-            Payments & Wallets
+            Thanh toán và Ví
           </h1>
           <p className="mt-2 text-sm font-medium italic text-slate-400">
             Theo dõi và xử lý yêu cầu rút tiền từ sinh viên

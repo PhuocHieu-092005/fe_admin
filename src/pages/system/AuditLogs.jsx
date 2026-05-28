@@ -70,7 +70,7 @@ export default function AuditLogs() {
   return (
     <div className="h-full bg-white p-8 pb-24 text-left text-black">
       <div className="mb-12 border-b border-slate-100 pb-6">
-        <h1 className="text-4xl font-semibold text-black">Audit Logs</h1>
+        <h1 className="text-4xl font-semibold text-black">Quản lý hoạt động</h1>
         <p className="mt-2 text-sm font-medium italic text-slate-400">
           Theo dõi lịch sử thao tác của quản trị viên trong hệ thống
         </p>
