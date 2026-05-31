@@ -232,7 +232,9 @@ export default function ProjectDetailModal({
                   <p className="mb-1 text-[9px] font-black uppercase tracking-widest text-slate-300">
                     Lượt xem
                   </p>
-                  <p className="text-xl font-black">{project?.view_count || 0}</p>
+                  <p className="text-xl font-black">
+                    {project?.view_count || 0}
+                  </p>
                 </div>
                 <div className="border-l border-slate-100 pl-8 text-center">
                   <p className="mb-1 text-[9px] font-black uppercase tracking-widest text-slate-300">
@@ -295,7 +297,9 @@ export default function ProjectDetailModal({
                   <p className="mb-1 text-[9px] font-black uppercase tracking-widest text-slate-300">
                     Lượt xem
                   </p>
-                  <p className="text-xl font-black">{project?.view_count || 0}</p>
+                  <p className="text-xl font-black">
+                    {project?.view_count || 0}
+                  </p>
                 </div>
                 <div className="border-l border-slate-100 pl-8 text-center">
                   <p className="mb-1 text-[9px] font-black uppercase tracking-widest text-slate-300">

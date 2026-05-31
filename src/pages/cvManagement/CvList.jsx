@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import cvService from "../../services/cvService";
 import CvTableRow from "./CvTableRow";
 import CvDetailModal from "./CvDetailModal";
+import Swal from "sweetalert2";
 export default function CvList() {
   const [cvs, setCvs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ export default function CvList() {
   //   }
   // };
   const handleApprove = async (id, status, adminNote) => {
+    const action = status === "APPROVED" ? "Duyệt" : "Từ chối";
     setActionLoading(true);
     try {
       const res = await cvService.approveCv(id, status, adminNote);
@@ -71,10 +73,10 @@ export default function CvList() {
       // Log data trả về từ server
       console.log("Response data:", res.data);
 
-      alert(
-        `Hồ sơ đã được ${
-          status === "APPROVED" ? "duyệt" : "từ chối"
-        } thành công!`,
+      await Swal.fire(
+        "Thành công!",
+        `Hồ sơ đã được ${action.toLowerCase()} thành công.`,
+        "success",
       );
 
       await loadCvs();

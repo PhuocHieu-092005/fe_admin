@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import jobService from "../../services/jobService";
+import Swal from "sweetalert2";
 export default function JobList() {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState("");
@@ -12,7 +13,11 @@ export default function JobList() {
       const response = await jobService.getJobDetail(id);
       setSelectedJob(response.data);
     } catch (err) {
-      window.alert(err);
+      Swal.fire(
+        "Lỗi",
+        err?.message || "Không thể tải chi tiết công việc!",
+        "error",
+      );
     }
   };
   const fetchJobs = async () => {
@@ -32,27 +37,52 @@ export default function JobList() {
     fetchJobs();
   }, [currentTab]);
   const handleCloseJob = async (id) => {
-    if (!window.confirm("Bạn có chắc muốn đóng tin tuyển dụng này ")) return;
+    const result = await Swal.fire({
+      title: "Đóng tin tuyển dụng?",
+      text: "Bạn có chắc muốn đóng tin tuyển dụng này không?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đóng tin",
+      cancelButtonText: "Hủy",
+      confirmButtonColor: "#4f46e5", // Màu chủ đạo Indigo đồng bộ giao diện của bạn
+    });
+    if (!result.isConfirmed) return;
     try {
       await jobService.closeJobByAdmin(id);
       fetchJobs(currentTab);
-      window.alert("Thành công");
+      await Swal.fire(
+        "Thành công!",
+        `Đóng bài viết thành công thành công.`,
+        "success",
+      );
     } catch (err) {
       setError(err);
     }
   };
   const handleApprove = async (id, action) => {
     const actionText = action === "APPROVE" ? "phê duyệt" : "từ chối";
-    const isComfirmed = window.confirm(
-      `Xác nhận: Bạn có chắc chắn muốn ${actionText}`,
-    );
-    if (isComfirmed) {
+    const isApprove = action === "APPROVE";
+    const result = await Swal.fire({
+      title: `Xác nhận ${actionText}?`,
+      text: `Bạn có chắc chắn muốn ${actionText} bài viết này không?`,
+      icon: isApprove ? "question" : "warning",
+      showCancelButton: true,
+      confirmButtonText: isApprove ? "Phê duyệt" : "Từ chối",
+      cancelButtonText: "Hủy",
+      confirmButtonColor: isApprove ? "#16a34a" : "#dc2626", // Xanh cho duyệt, đỏ cho từ chối
+    });
+    if (result.isConfirmed) {
       try {
         await jobService.approveJob(id, action);
-        window.alert(`Thành công: Đã ${actionText} bài viết`);
+        Swal.fire(
+          "Thành công",
+          `Đã ${actionText} bài viết thành công!`,
+          "success",
+        );
         fetchJobs();
       } catch (err) {
         console.log("Không thể tải danh sách công việc");
+        Swal.fire("Lỗi", `Không thể hoàn tất thao tác ${actionText}!`, "error");
         setError(err);
       }
     }
@@ -124,20 +154,19 @@ export default function JobList() {
                 </span>
               </div>
 
-            
               <div className=" gap-2 mt-3">
-                  <span className="text-gray-400 text-sm mt-2">Công nghệ </span>
-                    <div className="flex flex-wrap gap-2 mt-3">
-                {selectedJob.tags &&
-                  selectedJob.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-200 shadow-sm"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-              </div>
+                <span className="text-gray-400 text-sm mt-2">Công nghệ </span>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {selectedJob.tags &&
+                    selectedJob.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-200 shadow-sm"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                </div>
               </div>
             </div>
             <div className="flex flex-col">

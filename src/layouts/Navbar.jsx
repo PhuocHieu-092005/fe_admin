@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
 import notificationService from "../services/notificationService";
+import Swal from "sweetalert2";
 import { connectWebSocket, disconnectWebSocket } from "../services/wsService";
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -15,6 +16,13 @@ const Navbar = () => {
   const [isShow, setIsShow] = useState(false);
   const [selectedNotif, setSelectedNotif] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+  });
   useEffect(() => {
     // eslint-disable-next-line react-hooks/immutability
     fetchInitialData();
@@ -22,7 +30,11 @@ const Navbar = () => {
     console.log("an", user);
     connectWebSocket(user.email, (message) => {
       console.log("Tín hiệu mới", message);
-      alert("Bạn vừa có thông báo mới!");
+   
+      Toast.fire({
+        icon: "info",
+        title: "Bạn vừa nhận được thông báo mới",
+      });
       fetchInitialData();
     });
     return () => disconnectWebSocket();

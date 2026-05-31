@@ -8,6 +8,7 @@ import {
   GlobeAltIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Swal from "sweetalert2";
 import projectAccessRequestService from "../../services/projectAccessRequestService";
 import Pagination from "../../components/Pagination";
 
@@ -43,7 +44,11 @@ export default function ProjectAccessRequestList() {
       setTotalPages(pageData?.totalPages || 0);
     } catch (error) {
       console.error("Lỗi lấy danh sách request:", error);
-      window.alert("Không thể tải danh sách yêu cầu hợp tác project.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Không thể tải danh sách yêu cầu hợp tác project.",
+      });
     } finally {
       setLoading(false);
     }
@@ -70,7 +75,12 @@ export default function ProjectAccessRequestList() {
       }
     } catch (error) {
       console.error("Lỗi lấy chi tiết request:", error);
-      window.alert("Không thể tải chi tiết yêu cầu.");
+
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Không thể tải chi tiết yêu cầu.",
+      });
     }
   };
 
@@ -97,17 +107,25 @@ export default function ProjectAccessRequestList() {
           },
         );
 
-      window.alert(response?.message || "Đã cập nhật trạng thái yêu cầu.");
+      await Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: response?.message || "Đã cập nhật trạng thái yêu cầu.",
+        confirmButtonText: "Đóng",
+      });
       handleCloseModal();
       fetchRequests(page);
     } catch (error) {
       console.error("Lỗi cập nhật trạng thái request:", error);
       console.error("Response data:", error?.response?.data);
 
-      window.alert(
-        error?.response?.data?.message ||
+      Swal.fire({
+        icon: "error",
+        title: "Thất bại",
+        text:
+          error?.response?.data?.message ||
           "Không thể cập nhật trạng thái yêu cầu.",
-      );
+      });
     } finally {
       setSubmitLoading(false);
     }

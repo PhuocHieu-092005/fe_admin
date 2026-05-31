@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 const ProtectedRoute = ({ allowedRoles }) => {
   const { user, loading } = useAuth();
 
@@ -19,7 +20,12 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
   // Đã đăng nhập nhưng Role không nằm trong danh sách cho phép
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    alert("Tài khoản của bạn không có quyền truy cập trang này!");
+    Swal.fire({
+      icon: "warning",
+      title: "Không có quyền truy cập",
+      text: "Tài khoản của bạn không được phép truy cập trang này.",
+      confirmButtonText: "Đã hiểu",
+    });
     return <Navigate to="/" replace />;
   }
 
