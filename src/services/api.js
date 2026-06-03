@@ -1,8 +1,13 @@
 import axios from "axios";
+import {
+  API_BASE_URL,
+  NGROK_SKIP_BROWSER_WARNING_HEADER,
+} from "../config/env";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: API_BASE_URL,
   timeout: 10000,
+  headers: NGROK_SKIP_BROWSER_WARNING_HEADER,
 });
 
 axiosInstance.interceptors.request.use(

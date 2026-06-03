@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
+import api from "../../services/api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,10 +29,7 @@ export default function Login() {
         role: role,
       };
 
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        payload,
-      );
+      const response = await api.post("/auth/login", payload);
       const responseData = response.data;
 
       if (responseData && responseData.data) {
@@ -42,7 +39,7 @@ export default function Login() {
           role: userRole,
           full_name,
           avatar_url,
-          email
+          email,
         } = responseData.data;
 
         if (userRole !== "ADMIN" && userRole !== "TEACHER") {
@@ -50,8 +47,9 @@ export default function Login() {
           setIsLoading(false);
           return;
         }
-        // Truyền 4 tham số vào hàm login của Context
-        login(access_token, userRole, full_name, avatar_url,email);
+
+        // Truyền dữ liệu đăng nhập vào hàm login của Context
+        login(access_token, userRole, full_name, avatar_url, email);
         navigate("/");
       } else {
         setError(responseData.message || "Đăng nhập thất bại.");
@@ -115,7 +113,7 @@ export default function Login() {
             <input
               type="password"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-              placeholder="••••••••"
+              placeholder="********"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
