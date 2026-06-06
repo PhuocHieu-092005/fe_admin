@@ -1,4 +1,4 @@
-export const API_ORIGIN = "https://alec-vicegeral-exuberantly.ngrok-free.dev"; // Domain môi trường production
+export const API_ORIGIN = "https://hoaitam123.xyz"; // Domain môi trường production
 // export const API_ORIGIN = "http://localhost:8080"; // Domain môi trường local
 
 export const API_BASE_URL = `${API_ORIGIN}/api`;
