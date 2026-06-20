@@ -43,6 +43,9 @@ export const getAdminProjects = async (params = {}) => {
   const queryParams = {
     page: params.page ?? 0,
     size: params.size ?? 10,
+    studentName: params.studentName || undefined,
+    mssv: params.mssv || undefined,
+    status: params.status || undefined,
   };
   const response = await api.get("/projects/admin", { params: queryParams });
   return response.data;

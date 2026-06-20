@@ -4,12 +4,8 @@ import {
   FolderIcon,
   UsersIcon,
   BriefcaseIcon,
-  KeyIcon,
-  ArrowPathIcon,
   ClockIcon,
   CreditCardIcon,
-  Cog6ToothIcon,
-  BellIcon,
   BuildingOffice2Icon,
   AcademicCapIcon,
   ClipboardDocumentListIcon,
@@ -107,7 +103,7 @@ const Sidebar = () => {
               <li>
                 <Link to="/project" className={linkClass("/project")}>
                   <FolderIcon className={iconClass("/project")} />
-                  <span>Quản lý đò án</span>
+                  <span>Quản lý đồ án</span>
                 </Link>
               </li>
               <li>
@@ -163,18 +159,6 @@ const Sidebar = () => {
           {isAdmin ? (
             <>
               <li>
-                <Link to="/access" className={linkClass("/access")}>
-                  <KeyIcon className={iconClass("/access")} />
-                  <span>Yêu cầu truy cập</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/updates" className={linkClass("/updates")}>
-                  <ArrowPathIcon className={iconClass("/updates")} />
-                  <span>Cập nhật CV</span>
-                </Link>
-              </li>
-              <li>
                 <Link to="/logs" className={linkClass("/logs")}>
                   <ClockIcon className={iconClass("/logs")} />
                   <span>Nhật ký hoạt động</span>
@@ -186,21 +170,8 @@ const Sidebar = () => {
                   <span>Thanh toán & Ví</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/settings" className={linkClass("/settings")}>
-                  <Cog6ToothIcon className={iconClass("/settings")} />
-                  <span>Cài đặt</span>
-                </Link>
-              </li>
             </>
           ) : null}
-
-          <li>
-            <Link to="/notifications" className={linkClass("/notifications")}>
-              <BellIcon className={iconClass("/notifications")} />
-              <span>Thông báo</span>
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

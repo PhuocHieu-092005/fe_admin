@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import ProjectDetailModal from "./ProjectDetailModal";
 import Pagination from "../../components/Pagination";
 
+import { Filter } from "lucide-react";
+
 export default function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,12 +15,16 @@ export default function ProjectList() {
   const [modalLoading, setModalLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
+  const [filterName, setFilterName] = useState("");
+  const [filterMssv, setFilterMssv] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
     totalElements: 0,
     totalPages: 0,
     number: 0,
-    size: 5, // để dễ test phân trang hơn
+    size: 5,
   });
 
   useEffect(() => {
@@ -28,10 +34,16 @@ export default function ProjectList() {
   const loadData = async (page = 1) => {
     setLoading(true);
     try {
-      const res = await projectService.getAdminProjects({
+      const params = {
         page: page - 1,
         size: pageInfo.size,
-      });
+      };
+
+      if (filterName.trim()) params.studentName = filterName.trim();
+      if (filterMssv.trim()) params.mssv = filterMssv.trim();
+      if (filterStatus) params.status = filterStatus;
+
+      const res = await projectService.getAdminProjects(params);
 
       const pageData = res?.data || {};
       const content = pageData?.content || [];
@@ -55,6 +67,12 @@ export default function ProjectList() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    loadData(1);
   };
 
   const openDetails = async (id) => {
@@ -106,12 +124,67 @@ export default function ProjectList() {
 
   return (
     <div className="h-full bg-white p-8 pb-24 font-sans text-left text-black">
-      <div className="mb-12 border-b border-slate-100 pb-6">
+      <div className="mb-2 border-b border-slate-100 pb-6">
         <h1 className="text-4xl font-semibold text-black">Phê duyệt đồ án</h1>
         <p className="mt-2 text-sm font-medium italic text-slate-400">
           Quản lý và kiểm soát chất lượng nội dung đồ án sinh viên đăng tải
         </p>
       </div>
+
+      <form
+        onSubmit={handleFilter}
+        className="mb-2 flex flex-wrap gap-4 items-end bg-slate-50 p-5 rounded-[24px] border border-slate-100"
+      >
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">
+            Tên sinh viên
+          </label>
+          <input
+            type="text"
+            placeholder="VD: Nguyễn Văn A..."
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-black focus:ring-2 focus:ring-slate-100 transition-all bg-white"
+          />
+        </div>
+
+        <div className="flex-1 min-w-[150px]">
+          <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">
+            MSSV
+          </label>
+          <input
+            type="text"
+            placeholder="Nhập MSSV..."
+            value={filterMssv}
+            onChange={(e) => setFilterMssv(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-black focus:ring-2 focus:ring-slate-100 transition-all bg-white"
+          />
+        </div>
+
+        <div className="flex-1 min-w-[150px]">
+          <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">
+            Trạng thái
+          </label>
+          <select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-bold focus:outline-none focus:border-black focus:ring-2 focus:ring-slate-100 transition-all bg-white"
+          >
+            <option value="">Tất cả trạng thái</option>
+            <option value="PENDING">Chờ duyệt</option>
+            <option value="APPROVED">Đã duyệt</option>
+            <option value="REJECTED">Từ chối</option>
+            <option value="CLOSE">Đã đóng</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="h-[46px] px-8 bg-black text-white rounded-xl text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-slate-800 transition-all active:scale-95 shadow-md shadow-slate-200"
+        >
+          <Filter size={16} /> Lọc
+        </button>
+      </form>
 
       <div className="overflow-hidden rounded-[32px] border border-slate-100 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
@@ -134,7 +207,7 @@ export default function ProjectList() {
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50/50">
                 <th className="p-6 text-base font-black">Mã số</th>
-                <th className="p-6 text-base font-black">
+                <th className="p-6 text-base font-black w-1/3">
                   Tên đồ án / Sinh viên
                 </th>
                 <th className="p-6 text-center text-base font-black">
@@ -177,23 +250,33 @@ export default function ProjectList() {
                     <td className="p-6 font-mono text-sm text-slate-500">
                       #{p.id}
                     </td>
-
                     <td className="p-6">
-                      <p className="font-bold text-black">{p.title}</p>
-                      <p className="mt-0.5 text-xs font-semibold italic text-blue-600">
-                        {p.student_name || "Đang cập nhật..."}
+                      <p className="text-sm">
+                        <span className="font-mono font-semibold text-slate-600">
+                          {p.student_mssv}
+                        </span>
+
+                        <span className="ml-2 font-semibold italic text-blue-600">
+                          {p.student_name}
+                        </span>
+                      </p>
+
+                      <p
+                        className="mt-1 font-bold text-black line-clamp-2"
+                        title={p.title}
+                      >
+                        {p.title}
                       </p>
                     </td>
-
                     <td className="p-6 text-center">
-                      <span className="rounded-lg bg-slate-100 px-3 py-1 text-[10px] font-black uppercase text-slate-500">
+                      <span className="rounded-lg bg-slate-100 px-3 py-1 text-[10px] font-black uppercase text-slate-500 whitespace-nowrap">
                         {p.price_type === "PAID" ? "BÁN CODE" : "MIỄN PHÍ"}
                       </span>
                     </td>
 
                     <td className="p-6 text-center">
                       <span
-                        className={`inline-block min-w-[100px] rounded-full border-2 px-4 py-1 text-[10px] font-black uppercase tracking-tighter ${
+                        className={`inline-block min-w-[100px] rounded-full border-2 px-4 py-1 text-[10px] font-black uppercase tracking-tighter whitespace-nowrap ${
                           p.status === "APPROVED"
                             ? "border-emerald-500 text-emerald-600"
                             : p.status === "REJECTED"
@@ -216,7 +299,7 @@ export default function ProjectList() {
                     <td className="p-6 text-right">
                       <button
                         onClick={() => openDetails(p.id)}
-                        className="rounded-xl bg-black px-6 py-2.5 text-sm font-black text-white shadow-lg shadow-slate-200 transition-all hover:bg-slate-800 active:scale-95"
+                        className="rounded-xl bg-black px-6 py-2.5 text-sm font-black text-white shadow-lg shadow-slate-200 transition-all hover:bg-slate-800 active:scale-95 whitespace-nowrap"
                       >
                         Kiểm duyệt
                       </button>

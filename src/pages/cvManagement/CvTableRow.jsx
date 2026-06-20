@@ -17,11 +17,12 @@ export default function CvTableRow({ cv, onOpenDetails }) {
     <tr className="group hover:bg-slate-50/50 transition-colors">
       <td className="p-6 font-mono text-sm">#{cv.id}</td>
       <td className="p-6">
-        <p className="font-bold text-black">
-          {cv.type === "FORM"
-            ? cv.content_json?.personalInfo?.fullName
-            : cv.cv_file?.file_name}
-        </p>
+        {/* --- PHẦN SỬA --- */}
+        {/* Lấy thẳng tên sinh viên từ API hiển thị chữ to */}
+        <p className="font-bold text-black">{cv.student_name}</p>
+        {/* Tiêu đề CV hiển thị chữ nhỏ xám bên dưới cho đẹp và rõ ràng */}
+        <p className="text-xs font-medium text-slate-500 mt-1">{cv.title}</p>
+        {/* ---------------- */}
       </td>
       <td className="p-6 text-center">
         <span className="px-2.5 text-[9px] font-black uppercase">

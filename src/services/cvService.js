@@ -2,8 +2,8 @@ import axiosInstance from "./api";
 
 const cvService = {
   // Lấy danh sách TẤT CẢ CV (Dành cho Admin)
-  getAllCvs: async () => {
-    const response = await axiosInstance.get("/cvs");
+getAllCvs: async (params = {}) => {
+    const response = await axiosInstance.get("/cvs", { params });
     return response.data;
   },
 
