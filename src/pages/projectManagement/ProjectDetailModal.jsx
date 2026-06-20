@@ -6,6 +6,7 @@ import {
   Image as ImageIcon,
   Info,
   ExternalLink,
+  Users,
 } from "lucide-react";
 
 export default function ProjectDetailModal({
@@ -22,6 +23,8 @@ export default function ProjectDetailModal({
   const [error, setError] = useState("");
 
   if (!id) return null;
+
+  const members = Array.isArray(project?.members) ? project.members : [];
 
   const handleConfirmReject = () => {
     if (!adminNote.trim()) {
@@ -217,6 +220,41 @@ export default function ProjectDetailModal({
                         MSSV: {project?.student_mssv || "N/A"}
                       </p>
                     </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-zinc-800 pt-6">
+                    <p className="mb-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                      <Users size={14} /> Thành viên nhóm
+                    </p>
+
+                    {members.length > 0 ? (
+                      <div className="space-y-3">
+                        {members.map((member, index) => (
+                          <div
+                            key={member.student_id || member.mssv || index}
+                            className="rounded-2xl bg-zinc-800/70 p-4"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-bold text-white">
+                                  {member.student_name || "Chưa có tên"}
+                                </p>
+                                <p className="mt-1 text-xs text-zinc-500">
+                                  MSSV: {member.mssv || "N/A"}
+                                </p>
+                              </div>
+                              <span className="shrink-0 rounded-full border border-zinc-700 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-zinc-300">
+                                {member.role || "MEMBER"}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="rounded-2xl border border-dashed border-zinc-800 p-4 text-xs font-medium text-zinc-500">
+                        Chưa có thành viên nhóm.
+                      </p>
+                    )}
                   </div>
                 </section>
               </div>
